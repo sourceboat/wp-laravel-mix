@@ -1,0 +1,31 @@
+language: php
+php:
+- 5.6
+- 7.0
+- 7.1
+cache:
+  directories:
+  - "$HOME/.composer/cache"
+  - vendor
+before_install:
+- phpenv config-rm xdebug.ini
+- composer self-update
+- nvm install 6.9
+- nvm use 6.9
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH=$HOME/.yarn/bin:$PATH
+install:
+- composer install -o --prefer-dist --no-interaction
+script:
+- yarn run lint
+- yarn run package
+notifications:
+  slack:
+    secure: r6BeRdVdY92N9KwBgspg5LUpO4nSQJsXjES9Fr9wv078+Z6bx/c+vajxkjKojJE7o1rmu5p7DNyoIf1XVJq/ge3RL+t5snmezkcWLTonhWfZ2YsEqITXJtCT/73qqjwy3yaMm/EJMRPJlMzQoSqEXFK80GKMnPZYTGVki+2nfIo/SAf4tUGrFJYYD+m2DNrGB85KBvTwFZqR3YxFfvVX+jhF2Q3EgStl35S5RJj8yu89gbdQbYaUMzEuoJkCm0AAkFB5PhSDVubVLQxRn8rAQGAmwc+2te77/tfOlEzRDSot63z7hGPq5i1bfdM93bA9P0m6aAvGBY/eb+uDJOZ+Adl16G8OufPqAs69zL81L/KMt8pctD+62HZtdjUa5/jZiHdbVjjf8cOLN88wOmgSu3NCoPE5C7pSNJkOPpOapIuBfpyNMWbYeHx9KL9qGeEi6co35RtZZjklTMfyEvZTrIPAaYFdUQKaVePyUqsL+so0Y3taPqFPSAylYc+ox8STLiKw8jW6nUveIa8YGpn5VsBd7zF7UH/RMtChcZBCYqo6TidnZmWPYBtNBM2M5a/f1NhaTusdzupOAN5hyggReQBLT3vb1tuqdpkletZ2EmcdIBTiqjF22tYRz3gh3GHYaw67t3TkWBdqtlpFXNDXcWTZSJINa6y+uNwskmR9sCg=
+deploy:
+  provider: releases
+  api_key:
+    secure: ZHiEe2Fp+Q41Mm8F4Pm/blHbSUDbHuDIvbDYr+1sDrSERTQtpbFCmvgf0R/C6S6uYxqesZjPB0dZzPktaQ/on3xcv3zy0IowzsFueGUM46o1UWY+cajpZLdD/dsN0vgTHW2gyOw1KJzpJ3uc6y2X5aVlnubfYIlo1x7ukvEPVNBTXWjs+8vcSAKYJZ+NHKqrDUFlgoOnAAtyZu5wV2d/Dg7cqh3okYIb7eXxdUUmKFZ78mEQqr9L97FVNVxFSDWklSA4cR9+eg/FlZpne3YCCIopz4a4c2rmTDvPzpTUwrHolcH/7+sd5JxCvTyvm7CCmA9YHkOTWPrrDsj68Idv+ivsIV/l+jQ015DLMHSGjq/SzH8VYRPMrKCCFE2muB3t2IANFb39n1V514JlX4NS4Ir7FPlHEiNBYTSmwn1gYBtjjOv7aoeX+4aMwYZD2UIFjV7Zzbmy029n0uhTSN2Xtuy0+Hb680uo7WbEL6r8tjWjc/fL3aBCIh42CpPotgsHehkT0tT1t8SdcAiVnv6/YdV8SYa+zSPMlOYw1kosyBLJ1TG35Fhcvbm9ygJ9hqPo+s+4wJC1BYKwz+R7KJm9VpA9LW0F3d2oZCJCzZktkLqoN+VmquvRM4iEo3FgAVfbn/TwJM9yOS/N9c7z4lNPnZdIWXTM/tmxZznay9azQek=
+  file: wp-laravel-mix.zip
+  on:
+    tags: true
