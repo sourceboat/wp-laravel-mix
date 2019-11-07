@@ -11,7 +11,3 @@ To use this plugin you need to setup your WordPress installation via a Composer 
 ```
 $ composer require sourceboat/wp-laravel-mix
 ```
-
-## Usage
-
-*Coming soon...*
